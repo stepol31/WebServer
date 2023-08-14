@@ -1,14 +1,24 @@
 package ru.netology.server.dto;
 
+import org.apache.http.NameValuePair;
+
+import java.util.List;
 import java.util.Objects;
 
 public class Request {
     String method;
     String path;
+    List<NameValuePair> queryParameters;
 
     public Request(String method, String path) {
         this.method = method;
         this.path = path;
+    }
+
+    public Request(String method, String path, List<NameValuePair> queryParameters) {
+        this.method = method;
+        this.path = path;
+        this.queryParameters = queryParameters;
     }
 
     @Override
@@ -38,5 +48,16 @@ public class Request {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getQueryParam(String name) {
+        return queryParameters.stream()
+                .filter(parameter -> parameter.getName().equals(name))
+                .findFirst()
+                .toString();
+    }
+
+    public List<NameValuePair> getQueryParams() {
+        return queryParameters;
     }
 }
